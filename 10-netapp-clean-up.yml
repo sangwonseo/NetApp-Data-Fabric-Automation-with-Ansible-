@@ -1,29 +1,22 @@
 ################################################################################
 ##                                                                            ##
 ##  Ansible Tower Playbook                                                    ##
-##  Name:        Conf-Copy.yml                                                ##
+##  Name:        NetApp-Clean-Up.yml                                          ##
 ##  Created by:  Matthew Kimler and Robert Nelson                             ##
 ##  Website:     www.iarchive.com                                             ##
 ##                                                                            ##
 ################################################################################
 
----
-- name: Import apache directory configuration
-  hosts: ec2
-  become: yes
-  tasks:
-   - name: Copy httpd.conf file
-     copy:
-       src: /rhs/httpd.conf
-       dest: /etc/httpd/conf/httpd.conf
-       owner: root
-       group: root
-       mode: 0644
-       remote_src: yes
+--- 
+ - hosts: localhost
+   gather_facts: no
+   tasks:
+     - name: Delete Volume
+       na_cdot_volume:
+         state: absent
+         name: "DemoClone"
+         vserver: "svm_RHSAnsible"
+         hostname: "{{ netapp_hostname }}"
+         username: "{{ netapp_username }}"
+         password: "{{ netapp_password }}"
 
-   - name: Change Apache NFS permissions
-     command: setsebool -P httpd_use_nfs 1
-
-   - name: start the httpd service
-     service: name=httpd state=restarted
-     

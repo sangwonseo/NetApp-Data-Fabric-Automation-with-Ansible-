@@ -1,18 +1,20 @@
 ################################################################################
 ##                                                                            ##
-##  Ansible Tower Playbook                                                    ##
-##  Name:        Deploy-Apache.yml                                            ##
+##  Ansible Group Vars Sample                                                 ##
+##  Name:        Group_Vars_Template                                          ##
 ##  Created by:  Matthew Kimler and Robert Nelson                             ##
 ##  Website:     www.iarchive.com                                             ##
 ##                                                                            ##
 ################################################################################
 
----
-- name: This sets up an httpd webserver
-  hosts: ec2
-  become: yes
-  tasks:
-  - name: Install the httpd rpm
-    yum: name=httpd
-  - name: start the httpd service
-    service: name=httpd state=started
+aws_access_key: [access key for aws]
+aws_secret_key: [secret key for aws]
+key_name: [key file name]
+aws_region: [aws region]
+vpc_id: [vpc name]
+vpc_subnet_id: [subnet id]
+ami_id: [ami id]
+instance_type: [instance size]
+my_local_cidr_ip: [cidr range]
+firewall_group_id: [firewall group id]
+ami: [ami instance to use]
